@@ -84,6 +84,25 @@ module.exports = XeonBotInc = async (XeonBotInc, m, chatUpdate, store) => {
     	const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
 	const isPremium = isCreator || global.premium.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || false
 	
+	 //FAKE REPLY
+ const anu = {
+	key : {
+                          participant : '0@s.whatsapp.net'
+                        },
+       message: {
+                    orderMessage: {
+                            itemCount : 9999999999999,
+                            itemCoun : 404,
+                            surface : 404,
+                            message: `© ${pushname}\n© ʍɨռɛ-ʍɖ ɮʏ Ꮶʀɨʐ ֆɛʀ`,
+                            orderTitle: 'B',
+                            thumbnail: fs.readFileSync('.MINE-MD.jpg'), 
+                            sellerJid: '0@s.whatsapp.net'
+          
+                          }
+                        }
+                      }
+	
 //════════[runtime]═════════//
 const runtime = function (seconds) {
 seconds = Number(seconds);
@@ -1517,15 +1536,15 @@ case 'antilink':
                 let search = await yts(text)
                 let anu = search.videos[Math.floor(Math.random() * search.videos.length)]
                     ngen = `
-⭔ Title : ${anu.title}
-⭔ Ext : Search
-⭔ ID : ${anu.videoId}
-⭔ Duration : ${anu.timestamp}
-⭔ Viewers : ${anu.views}
-⭔ Uploaded : ${anu.ago}
-⭔ Author : ${anu.author.name}
-⭔ Channel : ${anu.author.url}
-⭔ Description : ${anu.description}
+♬ ᴛɪᴛʟᴇ : ${anu.title}
+♬ ᴇxᴛ : Search
+♬ ɪᴅ : ${anu.videoId}
+♬ ᴅᴜʀᴀᴛɪᴏɴ : ${anu.timestamp}
+♬ ᴠɪᴇᴡᴇʀs : ${anu.views}
+♬ ᴜᴘʟᴏᴀᴅ : ${anu.ago}
+♬ ᴀᴜᴛʜᴏʀ : ${anu.author.name}
+♬ ᴄʜᴀɴɴᴇʟ : ${anu.author.url}
+♬ ᴅᴇsᴄʀɪᴘᴛɪᴏɴ : ${anu.description}
 `
 message = await prepareWAMessageMedia({ image : { url: anu.thumbnail } }, { upload:   XeonBotInc.waUploadToServer })
                 template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
@@ -1536,16 +1555,16 @@ message = await prepareWAMessageMedia({ image : { url: anu.thumbnail } }, { uplo
                             hydratedFooterText: `Playing To ${text}`,
                             hydratedButtons: [{
                                 urlButton: {
-                                    displayText: '🥬Video Source Link🥬',
+                                    displayText: '🔍ᴠɪᴅᴇᴏ sᴏᴜʀᴄᴇ ʟɪɴᴋ🔎',
                                     url: `${anu.url}`
                                 }
                             }, {
                                 quickReplyButton: {
-                                    displayText: '🎵Audio🎵',
+                                    displayText: '🎶ᴀᴜᴅɪᴏ🎶',
                                     id: `ytmp3 ${anu.url} 320kbps`
                                     }
                                 },{quickReplyButton: {
-                                    displayText: '🎥VIdeo🎥',
+                                    displayText: '📽️ᴠɪᴅᴇᴏ📽️',
                                     id: `ytmp4 ${anu.url} 360p`
                                 }
                             }]
@@ -1556,14 +1575,11 @@ message = await prepareWAMessageMedia({ image : { url: anu.thumbnail } }, { uplo
             }
             break
 	    case 'ytmp3': case 'ytaudio': {
-                let { yta } = require('./lib/y2mate')
-                if (!text) throw `Example : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 320kbps`
-                let quality = args[1] ? args[1] : '320kbps'
-                let media = await yta(text, quality)
-                if (media.filesize >= 999999) return reply('Audio size is too big '+util.format(media))
-                XeonBotInc.sendImage(m.chat, media.thumb, `⭔ Title : ${media.title}\n⭔ File Size : ${media.filesizeF}\n⭔ Url : ${isUrl(text)}\n⭔ Ext : MP3\n⭔ Resolution : ${args[1] || '320kbps'}`, m)
-                XeonBotInc.sendMessage(m.chat, { audio: { url: media.dl_link }, mimetype: 'audio/mpeg', fileName: `${media.title}.mp3` }, { quoted: m })
-            }
+                await axios.get(`https://api.zeks.xyz/api/ytplaymp3/2?apikey=Nyarlathotep&q=${q}`)
+		     .then(res => {
+    		 XeonBotInc.sendMessage(from, '*ᴡᴀɪᴛ ʙʀᴏ🎈*', text, { contextInfo: { externalAdReply: { title: res.data.result.title, body: 'Duration ' + res.data.result.duration + ', Size ' + res.data.result.size, thumbnailUrl: res.data.result.thumb, sourceUrl: res.data.result.link }}})
+			 XeonBotInc.sendMessage(from, { url: res.data.result.link }, 'audioMessage', { mimetype: 'audio/mp4', quoted: anu, contextInfo: { externalAdReply: { title: res.data.result.title, mediaType: 2, thumbnailUrl: res.data.result.thumb, mediaUrl: res.data.result.source }}})
+})
             break
             case 'ytmp4': case 'ytvideo': {
                 let { ytv } = require('./lib/y2mate')
