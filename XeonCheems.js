@@ -1579,7 +1579,7 @@ message = await prepareWAMessageMedia({ image : { url: anu.thumbnail } }, { uplo
 		     .then(res => {
     		 XeonBotInc.sendMessage(from, '*ᴡᴀɪᴛ ʙʀᴏ🎈*', text, { contextInfo: { externalAdReply: { title: res.data.result.title, body: 'Duration ' + res.data.result.duration + ', Size ' + res.data.result.size, thumbnailUrl: res.data.result.thumb, sourceUrl: res.data.result.link }}})
 			 XeonBotInc.sendMessage(from, { url: res.data.result.link }, 'audioMessage', { mimetype: 'audio/mp4', quoted: anu, contextInfo: { externalAdReply: { title: res.data.result.title, mediaType: 2, thumbnailUrl: res.data.result.thumb, mediaUrl: res.data.result.source }}})
-}
+)
 break            
             case 'ytmp4': case 'ytvideo': {
                 let { ytv } = require('./lib/y2mate')
