@@ -84,8 +84,7 @@ module.exports = XeonBotInc = async (XeonBotInc, m, chatUpdate, store) => {
     	const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
 	const isPremium = isCreator || global.premium.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || false
 	
-	//AUTO BIO
-XeonBotInc.setStatus(`♡ᴍɪɴᴇ-ᴍᴅ♡ | ⏰ ${runtime(process.uptime() )} | 🔋 ᴇʀʀᴏʀ`) //.catch((_)=>_);
+	
 	
 	 //FAKE REPLY
  const anu = {
